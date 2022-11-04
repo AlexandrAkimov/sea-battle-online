@@ -17,17 +17,18 @@ function Login() {
     }
     return (
         <div>
-            <p>Authorization</p>
+            <h2>Авторизация</h2>
             <form onSubmit={startPlay}>
-                <fieldset>
-                    <label htmlFor="nickname">Nickname</label>
+                <div className="field-group">
+                    
+                    <div><label htmlFor="nickname">Ваше имя</label></div>
                     <input 
                         type="text" 
                         name="nickname" 
                         id="nickname" 
                         onChange={e => setNickname(e.target.value)}/>
-                </fieldset>
-                <div onChange={(e) => setTypeEnter(e.target.id === 'ingame')}>
+                </div>
+                <div onChange={(e) => setTypeEnter(e.target.id === 'ingame')} className="field-group">
                     <input 
                         type="radio" 
                         name="typeEnter" 
@@ -46,10 +47,12 @@ function Login() {
                     />
                     <label htmlFor="ingame">Войти в игру по идентификатору</label>
                 </div>
-                <fieldset>
+                <div className="field-group">
                     {invitationGame ? (
                         <>
-                            <label htmlFor="gameId">Введите идентификатор игры</label>
+                            <div>
+                                <label htmlFor="gameId">Введите идентификатор игры</label>                                
+                            </div>
                             <input 
                                 type="text" 
                                 name="gameId" 
@@ -60,7 +63,8 @@ function Login() {
                         
                     ) : (
                         <>
-                            <button 
+                            <button
+                                className="btn-gen" 
                                 onClick={(e) => {
                                     e.preventDefault()
                                     setGameId(Date.now())
@@ -71,13 +75,9 @@ function Login() {
                         </>
                         
                     )}
-                </fieldset>
-                {!invitationGame ? (
-                    <div><input type="text" defaultValue={gameId}/></div>
-                ) : (<></>)
-                    
-                }
-                <button type="submit">ИГРАТЬ</button>
+                </div>
+                
+                <button type="submit" className="btn-ready">ИГРАТЬ</button>
             </form>
         </div>
     );

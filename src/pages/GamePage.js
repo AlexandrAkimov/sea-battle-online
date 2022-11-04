@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useParams, useNavigate} from 'react-router-dom'
+import ActionsInfo from '../components/ActionsInfo';
 import BoardComponent from '../components/BoardComponent';
 import { Board } from '../models/Board';
 
@@ -72,6 +73,7 @@ const GamePage = () => {
 
     function ready() {
         wss.send(JSON.stringify({event: 'ready', payload: {username: localStorage.nickname}}))
+        setShipReady(true)
     }
 
     function shoot(x, y) {
@@ -109,7 +111,7 @@ const GamePage = () => {
 
                 </div>
             </div>
-            <button className="btn-ready" onClick={ready}>Корабли готовы</button>
+            <ActionsInfo ready={ready} canShoot={canShoot} shipsReady={shipsReady}/>
         </div>
     );
 }

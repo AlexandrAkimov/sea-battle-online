@@ -27,9 +27,10 @@
   height: 30px;
   border: 1px solid blue;
   box-sizing: border-box;
+  line-height: 100%;
 }
 
-.btn-ready {
+.btn-ready, .btn-gen {
   background-color: blueviolet;
   color: aliceblue;
   outline: none;
@@ -37,4 +38,30 @@
   height: 30px;
   margin-top: 30px;
   border-radius: 4px;
+}
+.btn-gen {
+  background-color: limegreen;
+}
+.red {
+  color: red;
+  background-color: #ccc;
+}
+.blue {
+  color: blue;
+  font-size: 30px;
+  vertical-align: middle;
+  font-weight: bolder;
+}
+.grey {
+  background-color: #ccc;
+}
+input[type="text"] {
+  width: 300px;
+  height: 39px;
+  border-radius: 4px;
+  border: 2px solid lightblue;
+  outline: none;
+}
+.field-group {
+  padding: 10px;
 }

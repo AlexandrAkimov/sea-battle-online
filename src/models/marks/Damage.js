@@ -5,5 +5,6 @@ export class Damage extends Mark {
         super(cell);
         this.logo = 'X';
         this.name = 'damage'
+        this.color = 'red'
     }
 }
