@@ -16,7 +16,7 @@
 }
 
 .active-shoot {
-  border: 3px solid greenyellow;
+  outline: 3px solid greenyellow;
 }
 
 .cell {
@@ -30,7 +30,8 @@
   line-height: 100%;
 }
 
-.btn-ready, .btn-gen {
+.btn-ready,
+.btn-gen {
   background-color: blueviolet;
   color: aliceblue;
   outline: none;
@@ -39,22 +40,27 @@
   margin-top: 30px;
   border-radius: 4px;
 }
+
 .btn-gen {
   background-color: limegreen;
 }
+
 .red {
   color: red;
   background-color: #ccc;
 }
+
 .blue {
   color: blue;
   font-size: 30px;
   vertical-align: middle;
   font-weight: bolder;
 }
+
 .grey {
   background-color: #ccc;
 }
+
 input[type="text"] {
   width: 300px;
   height: 39px;
@@ -62,6 +68,7 @@ input[type="text"] {
   border: 2px solid lightblue;
   outline: none;
 }
+
 .field-group {
   padding: 10px;
 }

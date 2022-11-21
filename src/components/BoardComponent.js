@@ -1,7 +1,7 @@
 import React from 'react';
 import CellComponent from './CellComponent';
 
-const BoardComponent = ({board, setBoard, shipsReady, isMyBoard, canShoot, shoot}) => {
+const BoardComponent = ({ board, setBoard, shipsReady, isMyBoard, canShoot, shoot }) => {
     const boardClasses = ['board']
     if (canShoot) {
         boardClasses.push('active-shoot')
@@ -24,9 +24,9 @@ const BoardComponent = ({board, setBoard, shipsReady, isMyBoard, canShoot, shoot
 
     return (
         <div className={boardClasses.join(' ')}>
-            {board.cells.map((row, index) => 
+            {board.cells.map((row, index) =>
                 <React.Fragment key={index}>
-                    {row.map(cell => 
+                    {row.map(cell =>
                         <CellComponent key={cell.id} cell={cell} addMark={addMark} />
                     )}
                 </React.Fragment>

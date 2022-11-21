@@ -12,7 +12,7 @@ export class Board {
             for (let j = 0; j < 10; j++) {
                 row.push(new Cell(this, j, i, null))
             }
-            this.cells.push(row)          
+            this.cells.push(row)
         }
     }
 
@@ -37,6 +37,5 @@ export class Board {
     addDamage(x, y) {
         new Damage(this.getCells(x, y))
     }
-
 
 }

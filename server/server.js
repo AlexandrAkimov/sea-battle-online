@@ -1,58 +1,69 @@
 const WebSocket = require('ws');
 
+const games = {}
 
-let gamePlayId = 0;
-let adminName = ''
 function start() {
   const wss = new WebSocket.Server({ port: 4000 }, () =>
-    console.log('Server started on port 4000')
+    console.log('WebSocket Server started on port 4000')
   );
-  const readyClients = new Set();
 
-  const clients = new Set();
   wss.on('connection', (wsClient) => {
-
-    if (clients.size < 2) {
-      clients.add(wsClient);
-    }
-
-    console.log(clients.size);
-    wsClient.on('message', (message) => {
+    wsClient.on('message', async (message) => {
       const req = JSON.parse(message.toString());
       wsClient.nickname = req.payload.username
-      if (clients.size < 2) adminName = req.payload.username
+      if (req.event == 'connect') {
+        initGames(wsClient, req.payload.gameId)
+      }
+
       broadcast(req);
     });
-
-    wsClient.on('close', () => {
-      clients.delete(wsClient);
-      //broadcast({ event: 'logout', payload: { data: 'logout' } });
-    });
   });
+
+  /* 
+    {
+      '34546565464': [
+        ws1: {......},
+        ws2: {......}
+      ],
+      '54543252435': [
+        ws3: {......},
+        ws4: {......}
+      ]
+    }
+  */
+
+  function initGames(ws, gameId) {
+    if (!games[gameId]) {
+      games[gameId] = [ws]
+    }
+
+    if (games[gameId] && games[gameId]?.length < 2) {
+      games[gameId] = [...games[gameId], ws]
+    }
+
+    if (games[gameId] && games[gameId].length === 2) {
+      games[gameId] = games[gameId].filter(wsc => wsc.nickname !== ws.nickname)
+      games[gameId] = [...games[gameId], ws]
+    }
+  }
 
   function broadcast(params) {
     let res;
     const { username, gameId } = params.payload
-    if (params.event === 'ready') {
-      readyClients.add(Date.now())
-    }
-    console.log('Size clients', clients.size);
-    clients.forEach((client) => {
+    games[gameId].forEach((client) => {
       switch (params.event) {
         case 'connect':
-          if (clients.size < 2) gamePlayId = gameId;
-          let rivalName = ''
-          if (clients.size === 2) {
-            rivalName = [...clients][0]?.nickname
-          }
-        
           res = {
             type: 'connectToPlay',
-            payload: { success: gamePlayId === gameId, rivalName, username }
+            payload: {
+              success: true,
+              rivalName: games[gameId].find(user => user.nickname !== client.nickname)?.nickname,
+              username: client.nickname
+            }
           };
           break;
         case 'ready':
-          res = { type: 'readyToPlay', payload: { canStart: readyClients.size > 1, username } };
+          res = { type: 'readyToPlay', payload: { canStart: games[gameId].length > 1, username } };
           break;
         case 'shoot':
           res = { type: 'afterShootByMe', payload: params.payload }
